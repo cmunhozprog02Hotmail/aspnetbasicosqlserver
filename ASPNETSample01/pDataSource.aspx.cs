@@ -13,5 +13,10 @@ namespace ASPNETSample01
         {
 
         }
+
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            lbl.Text = ((Button)sender).UniqueID;
+        }
     }
 }
