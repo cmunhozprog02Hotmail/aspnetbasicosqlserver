@@ -27,7 +27,15 @@
         <asp:GridView ID="GVCidades" runat="server" AutoGenerateColumns="False" DataKeyNames="idCidade" DataSourceID="SqlDsCidades" AllowPaging="True" AllowSorting="True" PageSize="5" OnRowDeleted="GVCidades_RowDeleted" OnRowDeleting="GVCidades_RowDeleting">
         <Columns>
             <asp:BoundField DataField="idCidade" HeaderText="idCidade" InsertVisible="False" ReadOnly="True" SortExpression="idCidade" />
-            <asp:BoundField DataField="descricao" HeaderText="descricao" SortExpression="descricao" />
+            <asp:TemplateField HeaderText="descricao" SortExpression="descricao">
+                <EditItemTemplate>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("descricao") %>'></asp:TextBox>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# DoUpper(Eval("descricao")) %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:BoundField DataField="descricao" HeaderText="descricao" SortExpression="descricao"/>
             <asp:TemplateField>
                 <HeaderTemplate>
                     Meu Botão
