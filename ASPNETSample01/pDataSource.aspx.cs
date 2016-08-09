@@ -18,5 +18,15 @@ namespace ASPNETSample01
         {
             lbl.Text = ((Button)sender).UniqueID;
         }
+
+        protected void GVCidades_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void GVCidades_RowDeleted(object sender, GridViewDeletedEventArgs e)
+        {
+
+        }
     }
 }
