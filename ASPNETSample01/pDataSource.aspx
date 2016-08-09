@@ -12,10 +12,16 @@
         <asp:SqlDataSource ID="SqlDsCidades" runat="server" 
             ConnectionString="<%$ ConnectionStrings:sampledbConnectionString %>" 
             SelectCommand="SELECT * FROM [Cidades]"
-             DeleteCommand="DELETE FROM Cidades WHERE [idCidade] = @idCidade">
+             DeleteCommand="DELETE FROM Cidades WHERE [idCidade] = @idCidade"
+             UpdateCommand="UPDATE Cidades SET descricao = @descricao WHERE (idCidade = @idCidade)">
+             
             <DeleteParameters>
                 <asp:ControlParameter ControlID="GVCidades" Name="idCidade" PropertyName="SelectedValue" />
             </DeleteParameters>
+            <UpdateParameters>
+                <asp:Parameter Type="String" Name="descricao"/>
+                <asp:ControlParameter ControlID="GVCidades" Name="newparameter" PropertyName="SelectedValue" />
+            </UpdateParameters>
         </asp:SqlDataSource>
         
         <asp:GridView ID="GVCidades" runat="server" AutoGenerateColumns="False" DataKeyNames="idCidade" DataSourceID="SqlDsCidades" AllowPaging="True" AllowSorting="True" PageSize="5" OnRowDeleted="GVCidades_RowDeleted" OnRowDeleting="GVCidades_RowDeleting">
@@ -39,6 +45,8 @@
                         text="Delete" OnClientClick="return confirm('OK ?');" />
                 </ItemTemplate>
             </asp:TemplateField>
+            
+            <asp:CommandField ShowEditButton="True" />
             
         </Columns>
     </asp:GridView>
