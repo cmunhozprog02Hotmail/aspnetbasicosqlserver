@@ -13,7 +13,8 @@
             ConnectionString="<%$ ConnectionStrings:sampledbConnectionString %>" 
             SelectCommand="SELECT * FROM [Cidades]"
              DeleteCommand="DELETE FROM Cidades WHERE [idCidade] = @idCidade"
-             UpdateCommand="UPDATE Cidades SET descricao = @descricao WHERE (idCidade = @idCidade)">
+             UpdateCommand="UPDATE Cidades SET descricao = @descricao WHERE (idCidade = @idCidade)"
+             InsertCommand="INSERT INTO Cidades(descricao) VALUES (@descricao)">
              
             <DeleteParameters>
                 <asp:ControlParameter ControlID="GVCidades" Name="idCidade" PropertyName="SelectedValue" />
@@ -22,48 +23,53 @@
                 <asp:Parameter Type="String" Name="descricao"/>
                 <asp:ControlParameter ControlID="GVCidades" Name="newparameter" PropertyName="SelectedValue" />
             </UpdateParameters>
+            <InsertParameters>
+                <asp:Parameter Type="String" Name="descricao"/>
+            </InsertParameters>
         </asp:SqlDataSource>
         
         <asp:GridView ID="GVCidades" runat="server" AutoGenerateColumns="False" DataKeyNames="idCidade" DataSourceID="SqlDsCidades" AllowPaging="True" AllowSorting="True" PageSize="5" OnRowDeleted="GVCidades_RowDeleted" OnRowDeleting="GVCidades_RowDeleting">
         <Columns>
             <asp:BoundField DataField="idCidade" HeaderText="idCidade" InsertVisible="False" ReadOnly="True" SortExpression="idCidade" />
-            <asp:TemplateField HeaderText="descricao" SortExpression="descricao">
-                <EditItemTemplate>
-                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("descricao") %>'></asp:TextBox>
-                </EditItemTemplate>
-                <ItemTemplate>
-                    <asp:Label ID="Label1" runat="server" Text='<%# DoUpper(Eval("descricao")) %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
             <asp:BoundField DataField="descricao" HeaderText="descricao" SortExpression="descricao"/>
-            <asp:TemplateField>
-                <HeaderTemplate>
-                    Meu Botão
-                </HeaderTemplate>
-                <ItemTemplate>
-                    <asp:Button runat="server" ID="btn" text="OK" OnClick="btn_Click" />
-                </ItemTemplate>
-            </asp:TemplateField>
-            <asp:TemplateField>
-                <HeaderTemplate>
-                    Delete
-                </HeaderTemplate>
-                <ItemTemplate>
-                    <asp:Button runat="server" ID="btnDelete" CommandName="Delete" 
-                        text="Delete" OnClientClick="return confirm('OK ?');" />
-                </ItemTemplate>
-            </asp:TemplateField>
-            
-            <asp:CommandField ShowEditButton="True" />
             
         </Columns>
     </asp:GridView>
         <asp:Label ID="lbl" runat="server" Text=""></asp:Label>
     
+        <br />
+        <br />
+        <asp:FormView ID="FormView1" runat="server" DataKeyNames="idCidade" DataSourceID="SqlDsCidades" DefaultMode="Insert">
+            <InsertItemTemplate>
+                Descrição:
+                <asp:TextBox ID="descricaoTextBox" runat="server" Text='<%# Bind("descricao") %>' />
+                <br />
+                <asp:LinkButton ID="InsertButton" runat="server" CausesValidation="True" CommandName="Insert" Text="Insert" />
+                &nbsp;<asp:LinkButton ID="InsertCancelButton" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel" />
+            </InsertItemTemplate>
+        </asp:FormView>
+    
     </div>
-        
+        <br />
+        <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDsCidades">
+            <HeaderTemplate>
+                <table border="1">
+            </HeaderTemplate>
+            <ItemTemplate>
+                <tr>
+                    <td><%# Eval("idCidade") %></td>
+                    <td><%# Eval("descricao") %></td>
+                </tr>
+            </ItemTemplate> 
+            <FooterTemplate>
+                </table>
+            </FooterTemplate>     
+                
+            
+        </asp:Repeater>
 
     </form>
+    
     
 </body>
 </html>

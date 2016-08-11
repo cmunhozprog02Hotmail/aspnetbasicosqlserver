@@ -29,7 +29,7 @@ namespace ASPNETSample01
 
         }
         public string DoUpper(object dados){
-            return dados.ToString().ToLower();
+            return dados.ToString().ToUpper();
         }
     }
 }
